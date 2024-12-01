@@ -110,6 +110,17 @@ def string_divide(num1, num2):
     quotient = ''.join(quotient).lstrip("0")
     return quotient if quotient else "0"
 
+def string_modulo(num1, num2):
+    """
+    Computes num1 % num2 using string-based division.
+    """
+    if num2 == "0":
+        return "Error: Division by zero"
+    remainder = 0
+    for digit in num1:
+        remainder = (remainder * 10 + int(digit)) % int(num2)
+    return str(remainder)
+
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
     print("Type 'exit' to quit.")
