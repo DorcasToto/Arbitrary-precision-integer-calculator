@@ -70,7 +70,7 @@ def string_multiply(num1, num2):
     Multiplies two numbers represented as strings.
     """
     num1, num2 = num1[::-1], num2[::-1]
-    result = [0] * (len(num1) + len(num2))  # Result storage
+    result = [0] * (len(num1) + len(num2)) 
 
     # Perform multiplication
     for i in range(len(num1)):
@@ -82,11 +82,33 @@ def string_multiply(num1, num2):
             result[i + j + 1] += result[i + j] // 10 
             result[i + j] %= 10
 
-    # Remove leading zeros and reverse back
     while len(result) > 1 and result[-1] == 0:
         result.pop()
 
     return ''.join(map(str, result[::-1]))
+
+def string_divide(num1, num2):
+    """
+    Divides two numbers represented as strings and returns the quotient as a string.
+    """
+    if num2 == "0":
+        return "Error: Division by zero"
+
+    if num1 == "0":
+        return "0"
+
+    quotient = []
+    remainder = 0
+
+    for digit in num1:
+        remainder = remainder * 10 + int(digit)
+        quotient_digit = remainder // int(num2)
+        quotient.append(str(quotient_digit))
+        remainder = remainder % int(num2)
+
+    # Remove leading zeros
+    quotient = ''.join(quotient).lstrip("0")
+    return quotient if quotient else "0"
 
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
@@ -121,7 +143,10 @@ def repl():
                 else:
                     print(f"Result: {multiply(int(num1), int(num2))}")
             elif operator == "/":
-                print(f"Result: {divide(int(num1), int(num2))}")
+                if len(num1) > 18 or len(num2) > 18:
+                    print(f"Result: {string_divide(num1, num2)}")
+                else:
+                    print(f"Result: {divide(int(num1), int(num2))}")
             else:
                 print(f"Unknown operator: {operator}")
         except ValueError:
