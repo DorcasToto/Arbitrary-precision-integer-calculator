@@ -131,6 +131,45 @@ def string_exponentiation(base, exponent):
     for _ in range(int(exponent)):
         result = string_multiply(result, base)
     return result
+
+def string_compare(num1, num2):
+    """
+    Compares two numbers represented as strings.
+    Returns:
+    -1 if num1 < num2
+     0 if num1 == num2
+     1 if num1 > num2
+    """
+    # Remove leading zeros for accurate comparison
+    num1 = num1.lstrip('0') or '0'
+    num2 = num2.lstrip('0') or '0'
+
+    # Compare lengths first
+    if len(num1) < len(num2):
+        return -1
+    elif len(num1) > len(num2):
+        return 1
+
+    # If lengths are the same, compare digit by digit
+    for digit1, digit2 in zip(num1, num2):
+        if digit1 < digit2:
+            return -1
+        elif digit1 > digit2:
+            return 1
+
+    return 0
+
+def string_factorial(num):
+    """
+    Computes factorial of an arbitrary precision integer.
+    """
+    result = "1"
+    current = "1"
+    while string_compare(current, num) <= 0:  # Compare strings numerically
+        result = string_multiply(result, current)
+        current = string_add(current, "1")
+    return result
+
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
     print("Type 'exit' to quit.")
