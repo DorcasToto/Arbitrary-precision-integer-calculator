@@ -20,6 +20,29 @@ def repl():
             print("Goodbye!")
             break
         print(f"You entered: {user_input}")
+        try:
+            parts = user_input.split()
+            if len(parts) != 3:
+                print("Invalid input. Use format: num1 <operator> num2 ")
+                continue
+
+            num1, operator, num2 = parts
+            num1, num2 = int(num1), int(num2)  # Convert to integers
+
+            if operator == "+":
+                print(add(num1, num2))
+            elif operator == "-":
+                print(subtract(num1, num2))
+            elif operator == "*":
+                print(multiply(num1, num2))
+            elif operator == "/":
+                print(divide(num1, num2))
+            else:
+                print(f"Unknown operator: {operator}")
+        except ValueError:
+            print("Invalid numbers. Please enter integers.")
+        except Exception as e:
+            print(f"Error: {e}")
 
 if __name__ == "__main__":
     repl()
