@@ -65,6 +65,29 @@ def string_subtract(num1, num2):
     final_result = ''.join(map(str, result[::-1]))
     return f"-{final_result}" if is_negative else final_result
 
+def string_multiply(num1, num2):
+    """
+    Multiplies two numbers represented as strings.
+    """
+    num1, num2 = num1[::-1], num2[::-1]
+    result = [0] * (len(num1) + len(num2))  # Result storage
+
+    # Perform multiplication
+    for i in range(len(num1)):
+        for j in range(len(num2)):
+            digit1 = int(num1[i])
+            digit2 = int(num2[j])
+            product = digit1 * digit2
+            result[i + j] += product  
+            result[i + j + 1] += result[i + j] // 10 
+            result[i + j] %= 10
+
+    # Remove leading zeros and reverse back
+    while len(result) > 1 and result[-1] == 0:
+        result.pop()
+
+    return ''.join(map(str, result[::-1]))
+
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
     print("Type 'exit' to quit.")
@@ -83,17 +106,20 @@ def repl():
             num1, operator, num2 = parts
 
             if operator == "+":
-                if len(num1) > 18 or len(num2) > 18:  # Arbitrary threshold for "large" numbers
+                if len(num1) > 18 or len(num2) > 18:  
                     print(f"Result: {string_add(num1, num2)}")
                 else:
                     print(f"Result: {add(int(num1), int(num2))}")
             elif operator == "-":
-                if len(num1) > 18 or len(num2) > 18:  # Arbitrary threshold for "large" numbers
+                if len(num1) > 18 or len(num2) > 18:  
                     print(f"Result: {string_subtract(num1, num2)}")
                 else:
                     print(f"Result: {subtract(int(num1), int(num2))}")
             elif operator == "*":
-                print(f"Result: {multiply(int(num1), int(num2))}")
+                if len(num1) > 18 or len(num2) > 18:
+                    print(f"Result: {string_multiply(num1, num2)}")
+                else:
+                    print(f"Result: {multiply(int(num1), int(num2))}")
             elif operator == "/":
                 print(f"Result: {divide(int(num1), int(num2))}")
             else:
