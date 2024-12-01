@@ -121,6 +121,16 @@ def string_modulo(num1, num2):
         remainder = (remainder * 10 + int(digit)) % int(num2)
     return str(remainder)
 
+def string_exponentiation(base, exponent):
+    """
+    Computes base^exponent for arbitrary precision integers.
+    """
+    if exponent == "0":
+        return "1"
+    result = "1"
+    for _ in range(int(exponent)):
+        result = string_multiply(result, base)
+    return result
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
     print("Type 'exit' to quit.")
