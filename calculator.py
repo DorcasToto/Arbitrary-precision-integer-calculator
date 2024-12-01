@@ -31,6 +31,40 @@ def string_add(num1, num2):
 
     return ''.join(map(str, result[::-1]))  
 
+def string_subtract(num1, num2):
+    """
+    Subtracts two numbers represented as strings.
+    Assumes num1 >= num2 for simplicity.
+    """
+    # Determine if result will be negative
+    is_negative = False
+    if len(num1) < len(num2) or (len(num1) == len(num2) and num1 < num2):
+        num1, num2 = num2, num1
+        is_negative = True
+
+    num1, num2 = num1[::-1], num2[::-1]  
+    result = []
+    borrow = 0
+
+    for i in range(len(num1)):
+        digit1 = int(num1[i]) 
+        digit2 = int(num2[i]) if i < len(num2) else 0  
+        diff = digit1 - digit2 - borrow
+        if diff < 0:
+            diff += 10 
+            borrow = 1
+        else:
+            borrow = 0
+        result.append(diff)
+
+   
+    while len(result) > 1 and result[-1] == 0:
+        result.pop()
+
+    
+    final_result = ''.join(map(str, result[::-1]))
+    return f"-{final_result}" if is_negative else final_result
+
 def repl():
     print("Welcome to the Arbitrary Precision Calculator!")
     print("Type 'exit' to quit.")
@@ -47,7 +81,6 @@ def repl():
                 continue
 
             num1, operator, num2 = parts
-            # num1, num2 = int(num1), int(num2)  # Convert to integers
 
             if operator == "+":
                 if len(num1) > 18 or len(num2) > 18:  # Arbitrary threshold for "large" numbers
@@ -55,7 +88,10 @@ def repl():
                 else:
                     print(f"Result: {add(int(num1), int(num2))}")
             elif operator == "-":
-                print(f"Result: {subtract(int(num1), int(num2))}")
+                if len(num1) > 18 or len(num2) > 18:  # Arbitrary threshold for "large" numbers
+                    print(f"Result: {string_subtract(num1, num2)}")
+                else:
+                    print(f"Result: {subtract(int(num1), int(num2))}")
             elif operator == "*":
                 print(f"Result: {multiply(int(num1), int(num2))}")
             elif operator == "/":
