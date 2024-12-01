@@ -47,7 +47,7 @@ def repl():
                 continue
 
             num1, operator, num2 = parts
-            num1, num2 = int(num1), int(num2)  # Convert to integers
+            # num1, num2 = int(num1), int(num2)  # Convert to integers
 
             if operator == "+":
                 if len(num1) > 18 or len(num2) > 18:  # Arbitrary threshold for "large" numbers
