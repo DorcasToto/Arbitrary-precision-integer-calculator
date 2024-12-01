@@ -207,6 +207,12 @@ def repl():
                     print(f"Result: {string_divide(num1, num2)}")
                 else:
                     print(f"Result: {divide(int(num1), int(num2))}")
+            elif operator == "%":
+                print(f"Result: {string_modulo(num1, num2)}")
+            elif operator == "**":
+                print(f"Result: {string_exponentiation(num1, num2)}")
+            elif operator == "!":
+                print(f"Result: {string_factorial(num1)}")
             else:
                 print(f"Unknown operator: {operator}")
         except ValueError:
